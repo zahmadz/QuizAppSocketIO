@@ -35,13 +35,20 @@ function initApp() {
     });
 
     // routes
-    // const authRoute = require("./routes/auth.router");
-    // app.use("/api/v1/auth", authRoute);
+    const authRoute = require("./routes/auth.route");
+    app.use("/api/v1/auth", authRoute);
 
     app.use((req, res, next) => {
       res.status(404).json({
         status: "failed",
         message: "page not found",
+      });
+    });
+
+    app.use((error, req, res, next) => {
+      res.status(500).json({
+        status: "failed",
+        message: error.message,
       });
     });
   } catch (error) {
